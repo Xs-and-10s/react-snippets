@@ -1,5 +1,5 @@
 /* 
-! A function that wraps a promise with a 
+! A function that wraps a promise (e.g., `fetch`) with a 
 ! Suspense-compatible interface
 ! As of now, Suspense only works in certain contexts
 ? The promise can be unwrapped by the 
