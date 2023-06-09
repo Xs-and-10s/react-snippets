@@ -1,6 +1,7 @@
 /* 
 ! A function that wraps a promise with a 
-! Suspense-compatible intergace
+! Suspense-compatible interface
+! As of now, Suspense only works in certain contexts
 ? The promise can be unwrapped by the 
 ? return value's `read()` method.
 */
