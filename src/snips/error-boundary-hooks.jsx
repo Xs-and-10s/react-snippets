@@ -107,7 +107,7 @@ function Demo() {
   return (
     <>
       <ErrorBoundary fallback={<div>Error while fetching!</div>}>
-        <Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
           <AsyncErrorComponent />
         </Suspense>
       </ErrorBoundary>
