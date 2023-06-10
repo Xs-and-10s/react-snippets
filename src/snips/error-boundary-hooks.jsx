@@ -101,9 +101,9 @@ function DangerousClickHandlerComponent() {
 }
 
 /* 
-? DEMO !!
+? Examples !!
 */
-function Demo() {
+function Examples() {
   return (
     <>
       <ErrorBoundary fallback={<div>Error while fetching!</div>}>
