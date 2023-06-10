@@ -1,10 +1,10 @@
 import { Suspense, useEffect, useState } from 'react';
 
 /* 
-  ErrorBoundary catches most errors, 
-  but there are a few that slip through the cracks.
-  the following trick can be used to get ErrorBoundaries
-  to catch the errors.
+?  ErrorBoundary catches most errors, 
+?  but there are a few that slip through the cracks.
+!  the following trick can be used to get ErrorBoundaries
+!  to catch the errors.
 */
 const ComponentErrorBoundaryTrick = () => {
   // create some random state that we'll use to throw errors
