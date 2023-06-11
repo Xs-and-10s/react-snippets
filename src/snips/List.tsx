@@ -6,11 +6,11 @@ type Item = {
   info: string;
 };
 
-type ListProps = {
-  items: Item[];
-  renderItem: (item: Item) => React.ReactNode;
+type ListProps<T> = {
+  items: T[];
+  renderItem: (item: T) => React.ReactNode;
 };
-export const List = ({ items, renderItem }: ListProps) => {
+export const List = ({ items, renderItem }: ListProps<Item>) => {
   return (
     <ul>
       {items.map((item: Item): React.JSX.Element => {
