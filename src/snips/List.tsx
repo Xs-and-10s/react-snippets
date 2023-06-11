@@ -1,8 +1,20 @@
-export const List = ({ items, renderItem }) => {
+import React from 'react';
+
+type Item = {
+  id: number;
+  value: string;
+  info: string;
+};
+
+type ListProps = {
+  items: Item[];
+  renderItem: (item: Item) => React.ReactNode;
+};
+export const List = ({ items, renderItem }: ListProps) => {
   return (
     <ul>
-      {items.map((item) => {
-        <li key={item.id}>{renderItem(item)}</li>;
+      {items.map((item: Item): React.JSX.Element => {
+        return <li key={item.id}>{renderItem(item)}</li>;
       })}
     </ul>
   );
