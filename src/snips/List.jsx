@@ -17,7 +17,7 @@ function Example() {
   return (
     <>
       <h1>Examples of Lists</h1>
-      <h2>List of items:</h2>
+      <h2>List of items</h2>
       <List items={items} renderItem={(item) => <span>{item.value}</span>} />
       <h2>List of items with extra info</h2>
       <List
