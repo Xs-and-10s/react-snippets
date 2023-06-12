@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
-const EffectFetcher = ({ id }) => {
-  const [user, setUser] = useState();
+type User = {
+  name: string;
+};
+const EffectFetcher = ({ id }: { id: number }) => {
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -19,8 +22,10 @@ const EffectFetcher = ({ id }) => {
   }, []);
 
   return (
-    <div>
-      <span>{user.name}</span>
-    </div>
+    <Suspense fallback={<span>Loading...</span>}>
+      <div>
+        <span>{user && user.name}</span>
+      </div>
+    </Suspense>
   );
 };
