@@ -1,3 +1,6 @@
+import React from 'react';
+import { useState } from 'react';
+
 // ! a minimal ErrorBoundary for Demo
 // ? consider using react-error-boundary instead ?
 export class ErrorBoundary extends React.Component {
@@ -23,4 +26,16 @@ export class ErrorBoundary extends React.Component {
     }
     return this.props.children;
   }
+}
+
+function Example() {
+  const [state, setState] = useState();
+  return (
+    <ErrorBoundary fallback={<div>Error caught!</div>}>
+      {state ||
+        setState(() => {
+          throw new Error('ErrorBoundary: show fallback');
+        })}
+    </ErrorBoundary>
+  );
 }
