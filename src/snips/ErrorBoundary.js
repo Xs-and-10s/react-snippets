@@ -1,16 +1,16 @@
 // ! a minimal ErrorBoundary for Demo
 // ? consider using react-error-boundary instead ?
 export class ErrorBoundary extends React.Component {
-  state = { hasError: false };
+  state = { hasError: false, error: null };
   constructor(props) {
     super(props);
   }
   static getDerivedStateFromError(error) {
-    return { hasError: true };
+    return { hasError: true, error };
   }
   /*
   Another important thing to do when dealing with errors
-  is to send the error iinfo somewhere where it can
+  is to send the error info somewhere where it can
   wake up everyone who's on-call.  For this, ErrorBoundaries
   give us the `componentDidCatch` method.
    */
