@@ -28,33 +28,30 @@ const ComponentErrorBoundaryTrick = () => {
 ///////////////////////////////////////
 
 /* 
-! A method for errors in async contexts
+! A method for errors in `.catch(e)` contexts
 */
 export const useThrowAsyncError = () => {
-  {
-    const [, setState] = useState();
-    return (error) => {
-      setState(() => {
-        throw error;
-      });
-    };
-  }
+  const [, setState] = useState();
+  return (error) => {
+    setState(() => {
+      throw error;
+    });
+  };
 };
 function AsyncErrorComponent() {
+  const [data, setData] = useState();
   const throwAsyncError = useThrowAsyncError();
 
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const promise = fetch('/err', { signal })
+    fetch('/err', { signal })
       .then((res) => res.json())
       .catch((e) => {
         throwAsyncError(e);
-      });
+      })
+      .then((d) => setData(d));
+
     return () => {
-      promise.finally(() => 'doCleanup');
-      controller.abort();
+      // do cleanup here if necessary
     };
   }, []);
 }
