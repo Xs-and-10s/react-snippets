@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const EffectFetcher = ({ id }) => {
-  const [user, setUser] = setState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     const controller = new AbortController();
