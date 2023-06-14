@@ -1,17 +1,25 @@
-import { Suspense, useEffect, useState } from 'react';
+import {
+  MouseEvent,
+  MouseEventHandler,
+  Suspense,
+  useEffect,
+  useState,
+} from 'react';
 import { ErrorBoundary } from './ErrorBoundary';
 
 /* 
 ?  ErrorBoundary catches most errors, 
 ?  but there are a few that slip through the cracks.
-!  the following trick can be used to get ErrorBoundaries
-!  to catch the errors.
+!  the following basic trick can be used to get ErrorBoundaries
+!  to catch the errors.  I know of two variations: 
+    * one for catching promise errors
+    * another for catching onclick errors
 */
 const ComponentErrorBoundaryTrick = () => {
   // create some random state that we'll use to throw errors
   const [, setState] = useState();
-
-  const onSomethingThatErrors = () => {
+  // something that could error
+  return () => {
     try {
       // something went wrong
     } catch (e) {
@@ -32,28 +40,33 @@ const ComponentErrorBoundaryTrick = () => {
 */
 export const useThrowAsyncError = () => {
   const [, setState] = useState();
-  return (error) => {
+  return <T,>(error: T extends Error ? T : never) => {
     setState(() => {
       throw error;
     });
   };
 };
-function AsyncErrorComponent() {
-  const [data, setData] = useState();
+function AsyncErrorExample() {
+  const [, setData] = useState();
   const throwAsyncError = useThrowAsyncError();
 
   useEffect(() => {
-    fetch('/err', { signal })
+    fetch('/err')
       .then((res) => res.json())
       .catch((e) => {
-        throwAsyncError(e);
+        /* 
+        ! use the hook to throw the error ! 
+        */
+        throwAsyncError<typeof e>(e);
       })
       .then((d) => setData(d));
 
     return () => {
-      // do cleanup here if necessary
+      /* do cleanup here if necessary */
     };
   }, []);
+
+  return <div>Fetching</div>;
 }
 
 ////////////////////////////////////////
@@ -61,11 +74,13 @@ function AsyncErrorComponent() {
 /* 
 ! A method for dangerous event callbacks
 */
-export const useHandlerWithPotentialError = (callback) => {
+export const useThrowableMouseHandler = <T,>(
+  callback: MouseEventHandler<T>
+) => {
   const [, setState] = useState();
-  return (...args) => {
+  return (event: MouseEvent<T>) => {
     try {
-      callback(...args);
+      callback(event);
     } catch (e) {
       setState(() => {
         throw e;
@@ -73,11 +88,16 @@ export const useHandlerWithPotentialError = (callback) => {
     }
   };
 };
-function DangerousClickHandlerComponent() {
-  const onClick = () => {
-    // do something dangerous here
-  };
-  const onClickWithErrorHandler = useHandlerWithPotentialError(onClick);
+function DangerousClickHandlerExample() {
+  const onClickWithErrorHandler = useThrowableMouseHandler<HTMLButtonElement>(
+    (evt) => {
+      evt.preventDefault();
+      /* 
+      ! do something dangerous here that could throw an error !
+      */
+      throw new Error('');
+    }
+  );
 
   return <button onClick={onClickWithErrorHandler}>click me!</button>;
 }
@@ -92,11 +112,11 @@ function Examples() {
     <>
       <ErrorBoundary fallback={<div>Error while fetching!</div>}>
         <Suspense fallback={<div>Loading...</div>}>
-          <AsyncErrorComponent />
+          <AsyncErrorExample />
         </Suspense>
       </ErrorBoundary>
       <ErrorBoundary fallback={<div>Error while clicking!</div>}>
-        <DangerousClickHandlerComponent />
+        <DangerousClickHandlerExample />
       </ErrorBoundary>
     </>
   );
