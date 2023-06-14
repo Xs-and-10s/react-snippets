@@ -22,7 +22,7 @@ export const Unless = ({ it, render, otherwise }: UnlessProps) => {
 };
 
 function DoesNotRenderExample() {
-  const isReady = true;
+  const isNotReady = true;
 
   return <Unless it={isReady} render={() => <Div>Won't render</Div>} />;
 }
