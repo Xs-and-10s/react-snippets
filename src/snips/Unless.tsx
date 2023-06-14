@@ -9,7 +9,7 @@ type UnlessProps = {
  * ! Works primarily as a guard clause, but potentially however
  * ! you can creatively find a use!
  * ? `Unless` is basically the inversion of `If`
- * ? if `it` is true, then don't render.
+ * ? if `it` is true, then don't render, unless `otherwise` prop exists.
  */
 export const Unless = ({ it, render, otherwise }: UnlessProps) => {
   if (it === false) {
@@ -21,10 +21,16 @@ export const Unless = ({ it, render, otherwise }: UnlessProps) => {
   return false;
 };
 
-function DoesNotRenderExample() {
-  const isNotReady = true;
+function RenderNothingExample() {
+  const isReady = true;
 
   return <Unless it={isReady} render={() => <Div>Won't render</Div>} />;
+}
+
+function RenderSpinnerExample() {
+  const isReady = false;
+
+  return <Unless it={isReady} render={() => <Div>Spinner</Div>} />;
 }
 
 function OtherwiseRenderExample() {
