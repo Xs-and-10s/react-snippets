@@ -25,7 +25,10 @@ class ChildhoodBeliefsError extends CustomError<ExampleErrors> {}
 
 function ExampleTryCatch() {
   try {
-    throw new CustomError<'DNE'>({ name: 'DNE', message: 'Does Not Exist' });
+    throw new CustomError<ExampleErrors>({
+      name: 'EASTER_BUNNY_DNE_ERROR',
+      message: 'The Easter Bunny Does Not Exist, kid',
+    });
   } catch (e) {
     console.error(e);
   }
