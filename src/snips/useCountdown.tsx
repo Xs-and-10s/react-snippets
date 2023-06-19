@@ -21,3 +21,17 @@ export const useCountdown = () => {
 
   return { secondsLeft, start };
 };
+
+function Example() {
+  const { secondsLeft, start } = useCountdown();
+
+  start(3);
+
+  return (
+    secondsLeft >= 0 && <Div>I am going now. This is the end. Goodbye.</Div>
+  );
+}
+
+function Div(props: React.ComponentProps<'div'>) {
+  return <div {...props}>{props.children}</div>;
+}
