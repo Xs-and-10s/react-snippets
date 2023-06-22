@@ -12,7 +12,7 @@ export const If = ({ isTrue, thenRender, otherwise }: IfProps) => {
   if (otherwise) {
     return otherwise();
   }
-  return false;
+  return null;
 };
 
 function Examples() {
