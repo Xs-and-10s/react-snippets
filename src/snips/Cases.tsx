@@ -10,7 +10,7 @@ const Cases = ({ match, ...rest }: CasesProps<RenderStates>) => {
   if (rest[match]) {
     return rest[match];
   }
-  return false;
+  return null;
 };
 
 function Example() {
