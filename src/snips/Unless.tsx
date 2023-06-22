@@ -18,7 +18,7 @@ export const Unless = ({ it, render, otherwise }: UnlessProps) => {
   if (otherwise) {
     return otherwise();
   }
-  return false;
+  return null;
 };
 
 function RenderNothingExample() {
